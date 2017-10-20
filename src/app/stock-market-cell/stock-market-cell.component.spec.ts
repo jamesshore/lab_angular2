@@ -22,16 +22,19 @@ describe('StockMarketCellComponent', () => {
     fixture.detectChanges();
   });
 
-  it("renders value", () => {
-    testHost.value = new Year(1984);
-    fixture.detectChanges();
-    const cell = fixture.debugElement.query(By.css("td"));
-
- 		expect(cell.nativeElement.innerHTML).toEqual("1984");
- 		expect(cell.nativeElement.classList.contains("negative")).toEqual(false);
+  it("renders text of value", () => {
+    expect(domNodeFor(new Year(1989)).textContent).toEqual("1989");
+ 		// expect(domNodeFor(new ValidDollars(-10)).textContent).toEqual("($10)");
  	});
 
+  function domNodeFor(value) {
+    testHost.value = value;
+    fixture.detectChanges();
+    return fixture.debugElement.query(By.css("td")).nativeElement;
+  }
+
 });
+
 
 @Component({
   template: `
