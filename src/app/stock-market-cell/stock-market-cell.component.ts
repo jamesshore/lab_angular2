@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { RenderTarget, RenderValues, SelfRenderable } from "../../values/render_target";
 
 declare type HtmlElement = any;
@@ -10,7 +10,7 @@ const NEGATIVE_CLASS = "negative";
   template: '{{value}}',
   styleUrls: ['./stock-market-cell.component.css']
 })
-export class StockMarketCellComponent implements OnInit {
+export class StockMarketCellComponent implements OnChanges {
 
   @Input() value: SelfRenderable;
   private renderTarget: RenderTarget;
@@ -19,7 +19,7 @@ export class StockMarketCellComponent implements OnInit {
     this.renderTarget = new MyRenderTarget(el.nativeElement);
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.value.renderTo(this.renderTarget);
   }
 
@@ -27,11 +27,16 @@ export class StockMarketCellComponent implements OnInit {
 
 class MyRenderTarget implements RenderTarget {
 
-  constructor(private nativeElement: HtmlElement) {}
+  constructor(private element: HtmlElement) {}
 
   render(values: RenderValues): void {
-    if (values.negative) this.nativeElement.classList.add(NEGATIVE_CLASS);
-    else this.nativeElement.classList.remove(NEGATIVE_CLASS);
+    if (values.negative) this.element.classList.add(NEGATIVE_CLASS);
+    else this.element.classList.remove(NEGATIVE_CLASS);
+
+    if (values.invalid) {
+      this.element.innerHTML = "<img src='/invalid_dollars.png' />";
+      this.element.attributes["title"] = values.tooltip;
+    }
   }
 
 }

@@ -2,6 +2,7 @@
 
 export interface SelfRenderable {
   renderTo(target: RenderTarget): void;
+  toString(): string;
 }
 
 export interface RenderTarget {
