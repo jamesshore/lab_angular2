@@ -1,7 +1,7 @@
-<td app-stock-market-cell>2010</td>
-<td>$10,000</td>
-<td>$12,000</td>
-<td>$695</td>
-<td>$232</td>
-<td>$13</td>
-<td>$19,300</td>
+<td app-stock-market-cell [value]="value.year()"></td>
+<td app-stock-market-cell [value]="value.startingBalance()"></td>
+<td app-stock-market-cell [value]="value.startingCostBasis()"></td>
+<td app-stock-market-cell [value]="value.totalSellOrders().flipSign()"></td>
+<td app-stock-market-cell [value]="value.capitalGainsTaxIncurred().flipSign()"></td>
+<td app-stock-market-cell [value]="value.growth()"></td>
+<td app-stock-market-cell [value]="value.endingBalance()"></td>
