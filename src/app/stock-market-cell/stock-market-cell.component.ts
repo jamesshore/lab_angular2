@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-// import { Year } from "../../values/year";
+import { Component, OnInit, Input } from '@angular/core';
+import { Year } from "../../values/year";
 
 @Component({
   selector: '[app-stock-market-cell]',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockMarketCellComponent implements OnInit {
 
-  value = "temp";
+  @Input() value = new Year(1234);
 
   constructor() {
   }
