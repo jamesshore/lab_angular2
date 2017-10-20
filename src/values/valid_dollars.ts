@@ -9,6 +9,11 @@ export class ValidDollars extends Dollars {
 
   private _amount: number;
 
+  static create(amount: number): Dollars {
+    if (this.inRange(amount)) return new ValidDollars(amount);
+    return new InvalidDollars();
+  }
+
   constructor(amount: number) {
     super();
     this._amount = amount;
@@ -41,7 +46,9 @@ export class ValidDollars extends Dollars {
   }
 
   flipSign(): Dollars {
-    return new ValidDollars(this._amount * -1);
+    let amount = this._amount * -1;
+    if (amount === -0) amount = +0;     // Normalize -0 to +0
+    return new ValidDollars(amount);
   }
 
   percentage(operand: number): Dollars {
@@ -81,4 +88,7 @@ export class ValidDollars extends Dollars {
     return new ValidDollars(fn(this._amount, operand.toNumber()));
   }
 
+  private static inRange(value: number) {
+    return (value >= this.MIN_VALUE) && (value <= this.MAX_VALUE);
+  }
 }

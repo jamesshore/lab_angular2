@@ -4,7 +4,7 @@ export interface RenderTarget {
   render(values: RenderValues): void;
 }
 
-interface RenderValues {
+export interface RenderValues {
   text: string;
   negative: boolean;
   invalid: boolean;

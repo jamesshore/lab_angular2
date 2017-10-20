@@ -1,11 +1,12 @@
-// Copyright (c) 2014 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
-"use strict";
+// Copyright (c) 2014-2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+
+import { RenderValues } from "./render_target";
 
 export class RenderTargetStub {
 
-  public rendering: any;
+  public rendering: RenderValues;
 
-  render(values: any): void {
+  render(values: RenderValues): void {
     this.rendering = values;
   }
 
