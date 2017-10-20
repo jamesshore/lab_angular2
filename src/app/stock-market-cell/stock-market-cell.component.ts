@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
-import { RenderTarget, RenderValues } from "../../values/render_target";
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { RenderTarget, RenderValues, SelfRenderable } from "../../values/render_target";
 
 declare type HtmlElement = any;
 
@@ -12,7 +12,7 @@ const NEGATIVE_CLASS = "negative";
 })
 export class StockMarketCellComponent implements OnInit {
 
-  @Input() value;
+  @Input() value: SelfRenderable;
   private renderTarget: RenderTarget;
 
   constructor(private el: ElementRef) {

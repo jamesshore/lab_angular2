@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { StockMarketCellComponent } from './stock-market-cell.component';
 import { Year } from "../../values/year";
 import { ValidDollars } from "../../values/valid_dollars";
+import { SelfRenderable } from "../../values/render_target";
 
 describe('StockMarketCellComponent', () => {
 
@@ -25,15 +26,6 @@ describe('StockMarketCellComponent', () => {
     expect(domNodeFor(new ValidDollars(10)).className).toEqual("");
   });
 
-  function domNodeFor(value) {
-    const fixture = TestBed.createComponent(TestHostComponent);
-    const testHost = fixture.componentInstance;
-
-    testHost.value = value;
-    fixture.detectChanges();
-    return fixture.debugElement.query(By.css("td")).nativeElement;
-  }
-
 });
 
 
@@ -45,5 +37,14 @@ describe('StockMarketCellComponent', () => {
   `
 })
 class TestHostComponent {
-  value: any;
+  value: SelfRenderable;
+}
+
+function domNodeFor(value) {
+  const fixture = TestBed.createComponent(TestHostComponent);
+  const testHost = fixture.componentInstance;
+
+  testHost.value = value;
+  fixture.detectChanges();
+  return fixture.debugElement.query(By.css("td")).nativeElement;
 }
