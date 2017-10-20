@@ -1,5 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Year } from "../../values/year";
+import { Component, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
+import { RenderTarget, RenderValues } from "../../values/render_target";
+
+declare type HtmlElement = any;
+
+const NEGATIVE_CLASS = "negative";
 
 @Component({
   selector: '[app-stock-market-cell]',
@@ -8,12 +12,26 @@ import { Year } from "../../values/year";
 })
 export class StockMarketCellComponent implements OnInit {
 
-  @Input() value = new Year(1234);
+  @Input() value;
+  private renderTarget: RenderTarget;
 
-  constructor() {
+  constructor(private el: ElementRef) {
+    this.renderTarget = new MyRenderTarget(el.nativeElement);
   }
 
   ngOnInit() {
+    this.value.renderTo(this.renderTarget);
+  }
+
+}
+
+class MyRenderTarget implements RenderTarget {
+
+  constructor(private nativeElement: HtmlElement) {}
+
+  render(values: RenderValues): void {
+    if (values.negative) this.nativeElement.classList.add(NEGATIVE_CLASS);
+    else this.nativeElement.classList.remove(NEGATIVE_CLASS);
   }
 
 }
