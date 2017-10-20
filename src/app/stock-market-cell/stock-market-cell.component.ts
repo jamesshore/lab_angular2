@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockMarketCellComponent implements OnInit {
 
-  constructor() { }
+  value = "Hi!";
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
