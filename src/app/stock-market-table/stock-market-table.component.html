@@ -11,8 +11,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr app-stock-market-row [value]="deleteme"></tr>
-    <tr app-stock-market-row [value]="deleteme"></tr>
-    <tr app-stock-market-row [value]="deleteme"></tr>
+    <tr *ngFor="let year of years" app-stock-market-row [value]="year"></tr>
   </tbody>
 </table>
