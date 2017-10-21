@@ -12,32 +12,26 @@ const NEGATIVE_CLASS = "negative";
   template: '{{value}}',
   styleUrls: ['./stock-market-cell.component.css']
 })
-export class StockMarketCellComponent implements OnChanges {
+export class StockMarketCellComponent implements RenderTarget, OnChanges {
 
   @Input() value: SelfRenderable;
-  private renderTarget: RenderTarget;
+  private _element;
 
-  constructor(private el: ElementRef) {
-    this.renderTarget = new MyRenderTarget(el.nativeElement);
+  constructor(el: ElementRef) {
+    this._element = el.nativeElement;
   }
 
   ngOnChanges() {
-    this.value.renderTo(this.renderTarget);
+    this.value.renderTo(this);
   }
 
-}
-
-class MyRenderTarget implements RenderTarget {
-
-  constructor(private element: HtmlElement) {}
-
   render(values: RenderValues): void {
-    if (values.negative) this.element.classList.add(NEGATIVE_CLASS);
-    else this.element.classList.remove(NEGATIVE_CLASS);
+    if (values.negative) this._element.classList.add(NEGATIVE_CLASS);
+    else this._element.classList.remove(NEGATIVE_CLASS);
 
     if (values.invalid) {
-      this.element.innerHTML = "<img src='/invalid_dollars.png' />";
-      this.element.setAttribute("title", values.tooltip);
+      this._element.innerHTML = "<img src='/invalid_dollars.png' />";
+      this._element.setAttribute("title", values.tooltip);
     }
   }
 
