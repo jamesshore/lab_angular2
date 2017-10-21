@@ -34,8 +34,8 @@ describe('StockMarketCellComponent', () => {
     const imgNode = node.querySelector("img");
 
     expect(node.className).toBe("");
-    expect(node.attributes["title"]).toBe("Invalid dollar amount");
-    expect(imgNode.attributes["src"].value).toBe("/invalid_dollars.png");
+    expect(node.getAttribute("title")).toBe("Invalid dollar amount");
+    expect(imgNode.getAttribute("src")).toBe("/invalid_dollars.png");
   });
 
   it("updates rendering when underlying value changes", () => {

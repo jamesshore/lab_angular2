@@ -37,7 +37,7 @@ class MyRenderTarget implements RenderTarget {
 
     if (values.invalid) {
       this.element.innerHTML = "<img src='/invalid_dollars.png' />";
-      this.element.attributes["title"] = values.tooltip;
+      this.element.setAttribute("title", values.tooltip);
     }
   }
 
