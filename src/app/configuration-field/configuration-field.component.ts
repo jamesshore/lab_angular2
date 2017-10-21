@@ -12,13 +12,15 @@ export class ConfigurationFieldComponent implements OnChanges {
   @Input() value: UserEnteredDollars;
   title: string;
   invalidClass: boolean;
-  deleteme: TemporaryModel;
+  model: TemporaryModel;
+  stringModel: string = "stringModel_initial_value";
+
 
   private target: RenderTarget;
 
   constructor() {
     this.target = new MyRenderTarget(this);
-    this.deleteme = new TemporaryModel(this);
+    this.model = new TemporaryModel(this);
   }
 
   ngOnChanges() {

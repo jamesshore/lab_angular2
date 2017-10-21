@@ -7,6 +7,7 @@ import { ValidDollars } from "../../values/valid_dollars";
 import { UserEnteredDollars } from "../../values/user_entered_dollars";
 import { InvalidDollars } from "../../values/invalid_dollars";
 import { FormsModule } from "@angular/forms";
+import { By } from "@angular/platform-browser";
 
 const IRRELEVANT_DOLLARS = new UserEnteredDollars("irrelevant dollars");
 const IRRELEVANT_LABEL = "irrelevant label";
@@ -53,13 +54,43 @@ describe('ConfigurationFieldComponent', () => {
 
   xit("updates value when field changes (due to user input)", fakeAsync(() => {
     const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
-    const textField = textFieldOf(fixture);
+    // const textField = textFieldOf(fixture);
+    //
+    // expect(textField.value).toBe("original");
+    //
+    // textField.value = "updated";
+    // // textField.dispatchEvent(new Event("input"));
+    // const textFieldDebugElement = fixture.debugElement.query(By.css("input"));
+    // textFieldDebugElement.triggerEventHandler("input", null);
+    //
+    // fixture.detectChanges();
+    // tick();
 
-    expect(textField.value).toBe("original");
+    // setInputValue(fixture, "input", "updated");
 
-    textField.value = "updated";
+    console.log("VALUE", fixture.componentInstance.value);
+
     expect(testHost.value).toEqual(new UserEnteredDollars("updated"));
   }));
+
+
+  fit("experimental test, deleteme", fakeAsync(() => {
+    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const fieldComponent = componentUnderTest(fixture);
+    expect(fieldComponent.stringModel).toBe("stringModel_initial_value");
+
+    const inputDom = textFieldOf(fixture);
+    setInputValue(inputDom, "updated");
+
+    expect(fieldComponent.stringModel).toBe("updated");
+  }));
+
+
+
+  function setInputValue(domElement, value: string) {
+    domElement.value = value;
+    domElement.dispatchEvent(new Event("input"));
+  }
 });
 
 
@@ -81,6 +112,10 @@ function createComponent(value: UserEnteredDollars, label: string) {
   tick();
 
   return { fixture, testHost };
+}
+
+function componentUnderTest(fixture) {
+  return fixture.debugElement.query(By.directive(ConfigurationFieldComponent)).componentInstance;
 }
 
 function labelOf(fixture) {
