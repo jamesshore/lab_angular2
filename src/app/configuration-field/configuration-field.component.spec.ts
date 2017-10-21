@@ -82,7 +82,7 @@ describe('ConfigurationFieldComponent', () => {
   "</app-configuration-field>"
 })
 class TestHostComponent {
-  
+
   lastEvent: UserEnteredDollars;
   value: UserEnteredDollars;
   label: string;

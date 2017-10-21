@@ -48,7 +48,7 @@ h2 {
 }
 
 .config input.invalid {
-	background: url('/invalid_dollars.png') no-repeat center right 4px;
+	background: url('/assets/invalid_dollars.png') no-repeat center right 4px;
 }
 
 /* Setting the background removes default focus highlighting (on Mac & Firefox, anyway). */
