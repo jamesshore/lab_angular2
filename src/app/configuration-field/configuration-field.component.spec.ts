@@ -21,7 +21,7 @@ describe('ConfigurationFieldComponent', () => {
 
   it("displays label", () => {
     const { fixture } = createComponent(IRRELEVANT_DOLLARS, "my label");
-    expect(labelOf(fixture)).toBe("my label");
+    expect(labelOf(fixture)).toBe("my label:");
   });
 
   it("renders valid values", () => {
