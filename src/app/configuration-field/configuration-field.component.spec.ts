@@ -23,12 +23,12 @@ describe('ConfigurationFieldComponent', () => {
   }));
 
   it("displays label", fakeAsync(() => {
-    const { fixture } = createComponent(IRRELEVANT_DOLLARS, "my label");
-    expect(labelOf(fixture)).toBe("my label:");
+    const testHost = TestHostComponent.create(IRRELEVANT_DOLLARS, "my label");
+    expect(testHost.labelDom.textContent).toBe("my label:");
   }));
 
   it("renders valid values", fakeAsync(() => {
-    const textField = textFieldFor(new UserEnteredDollars("123"));
+    const textField = TestHostComponent.textFieldFor(new UserEnteredDollars("123"));
 
     expect(textField.value).toBe("123");
     expect(textField.classList.contains("invalid")).toBe(false);
@@ -36,7 +36,7 @@ describe('ConfigurationFieldComponent', () => {
   }));
 
   it("renders invalid values with a warning icon", fakeAsync(() => {
-    const textField = textFieldFor(new UserEnteredDollars("xxx"));
+    const textField = TestHostComponent.textFieldFor(new UserEnteredDollars("xxx"));
 
     expect(textField.value).toBe("xxx");
     expect(textField.classList.contains("invalid")).toBe(true);
@@ -44,40 +44,32 @@ describe('ConfigurationFieldComponent', () => {
   }));
 
   it("changes rendering when value changes", fakeAsync(() => {
-    const { fixture, testHost } = createComponent(new UserEnteredDollars("123"), IRRELEVANT_LABEL);
-    expect(textFieldOf(fixture).classList.contains("invalid")).toBe(false);
+    const testHost = TestHostComponent.create(new UserEnteredDollars("123"), IRRELEVANT_LABEL);
+    const textField = testHost.textFieldDom;
+    expect(textField.classList.contains("invalid")).toBe(false);
 
-    testHost.value = new UserEnteredDollars("xxx");
-    fixture.detectChanges();
-    expect(textFieldOf(fixture).classList.contains("invalid")).toBe(true);
+    testHost.updateValue(new UserEnteredDollars("xxx"));
+    expect(textField.classList.contains("invalid")).toBe(true);
   }));
 
   it("updates value when field changes due to user input", fakeAsync(() => {
-    const { fixture, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
-    const textField = textFieldOf(fixture);
-    expect(textField.value).toBe("original");
+    const testHost = TestHostComponent.create(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
 
-    setInputValue(textField, "updated");
-    expect(component.value).toEqual(new UserEnteredDollars("updated"));
+    testHost.simulateUserInput("updated");
+    expect(testHost.component.value).toEqual(new UserEnteredDollars("updated"));
   }));
 
-  it("sends event when field changes", fakeAsync(() => {
-    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
-    const textField = textFieldOf(fixture);
+  it("sends event when field changes due to user input", fakeAsync(() => {
+    const testHost = TestHostComponent.create(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
 
-    setInputValue(textField, "42");
+    testHost.simulateUserInput("42");
     expect(testHost.lastEvent).toEqual(new UserEnteredDollars("42"));
   }));
 
-  function setInputValue(domElement, value: string) {
-    domElement.value = value;
-    domElement.dispatchEvent(new Event("input"));
-  }
-
   it("simulates field change (for testing purposes)", fakeAsync(() => {
-    const { testHost, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const testHost = TestHostComponent.create(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
 
-    component.simulateChange("99");
+    testHost.component.simulateChange("99");
     expect(testHost.lastEvent).toEqual(new UserEnteredDollars("99"));
   }));
 
@@ -90,36 +82,55 @@ describe('ConfigurationFieldComponent', () => {
   "</app-configuration-field>"
 })
 class TestHostComponent {
+  
   lastEvent: UserEnteredDollars;
   value: UserEnteredDollars;
   label: string;
   onChange(event: UserEnteredDollars) {
     this.lastEvent = event;
   }
-}
 
-function createComponent(value: UserEnteredDollars, label: string) {
-  const fixture = TestBed.createComponent(TestHostComponent);
-  const testHost = fixture.componentInstance;
-  const component = fixture.debugElement.query(By.directive(ConfigurationFieldComponent)).componentInstance;
+  private _fixture;
 
-  testHost.value = value;
-  testHost.label = label;
-  fixture.detectChanges();
-  tick();
+  static create(value: UserEnteredDollars, label: string) {
+    const fixture = TestBed.createComponent(TestHostComponent);
+    const testHost = fixture.componentInstance;
 
-  return { fixture, testHost, component };
-}
+    testHost.value = value;
+    testHost.label = label;
+    testHost._fixture = fixture;
+    fixture.detectChanges();
+    tick();
 
-function labelOf(fixture) {
-  return fixture.debugElement.nativeElement.querySelector("label").textContent;
-}
+    return testHost;
+  }
 
-function textFieldFor(dollars: UserEnteredDollars) {
-  const { fixture } = createComponent(dollars, IRRELEVANT_LABEL);
-  return textFieldOf(fixture);
-}
+  static textFieldFor(value: UserEnteredDollars) {
+    const testHost = this.create(value, IRRELEVANT_LABEL);
+    return testHost.textFieldDom;
+  }
 
-function textFieldOf(fixture) {
-  return fixture.debugElement.nativeElement.querySelector("input");
+  updateValue(newValue: UserEnteredDollars) {
+    this.value = newValue;
+    this._fixture.detectChanges();
+  }
+
+  simulateUserInput(newValue: string) {
+    const textField = this.textFieldDom;
+    textField.value = newValue;
+    textField.dispatchEvent(new Event("input"));
+  }
+
+  get component(): ConfigurationFieldComponent {
+    return this._fixture.debugElement.query(By.directive(ConfigurationFieldComponent)).componentInstance;
+  }
+
+  get labelDom() {
+    return this._fixture.debugElement.nativeElement.querySelector("label");
+  }
+
+  get textFieldDom() {
+    return this._fixture.debugElement.nativeElement.querySelector("input");
+  }
+
 }
