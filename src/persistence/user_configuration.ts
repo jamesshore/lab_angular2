@@ -32,38 +32,38 @@ export class UserConfiguration {
     //}.bind(this), 500);
   }
 
-  getStartingBalance() {
+  getStartingBalance(): UserEnteredDollars {
     return this._startingBalance;
   }
 
-  setStartingBalance(dollars) {
+  setStartingBalance(dollars: UserEnteredDollars): void {
     this._startingBalance = dollars;
     this.triggerChangeEvent();
   }
 
-  getStartingCostBasis() {
+  getStartingCostBasis(): UserEnteredDollars {
     return this._startingCostBasis;
   }
 
-  setStartingCostBasis(dollars) {
+  setStartingCostBasis(dollars: UserEnteredDollars): void {
     this._startingCostBasis = dollars;
     this.triggerChangeEvent();
   }
 
-  getYearlySpending() {
+  getYearlySpending(): UserEnteredDollars {
     return this._yearlySpending;
   }
 
-  setYearlySpending(dollars) {
+  setYearlySpending(dollars: UserEnteredDollars): void { 
     this._yearlySpending = dollars;
     this.triggerChangeEvent();
   }
 
-  onChange(callback) {
+  onChange(callback: Function): void {
     this._changeHandlers.push(callback);
   }
 
-  private triggerChangeEvent() {
+  private triggerChangeEvent(): void {
     this._changeHandlers.forEach(function (handler) {
       handler(self);
     });
