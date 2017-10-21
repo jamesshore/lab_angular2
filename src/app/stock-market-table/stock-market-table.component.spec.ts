@@ -45,6 +45,18 @@ describe('StockMarketTableComponent', () => {
     expect(rows[40]).toEqual(projection.getYearOffset(40));
   });
 
+  it("updates table when projection changes", () => {
+    const originalProjection = new StockMarketProjection(FIRST_YEAR, new Year(2010), IRRELEVANT_DOLLARS);
+    const { fixture, testHost } = createComponent(originalProjection);
+    expect(rowValues(fixture).length).toEqual(1);
+
+    const newProjection = new StockMarketProjection(FIRST_YEAR, new Year(2011), IRRELEVANT_DOLLARS);
+    testHost.value = newProjection;
+    fixture.detectChanges();
+
+    expect(rowValues(fixture).length).toEqual(2);
+  });
+
 });
 
 
