@@ -1,3 +1,5 @@
+// Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+
 import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { RenderTarget, RenderValues, SelfRenderable } from "../../values/render_target";
 

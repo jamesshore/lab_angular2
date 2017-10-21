@@ -1,3 +1,5 @@
+// Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+
 import { Component, Input, OnInit } from '@angular/core';
 import { StockMarketYear } from "../../domain/stock_market_year";
 

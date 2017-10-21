@@ -1,3 +1,5 @@
+// Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StockMarketRowComponent } from './stock-market-row.component';

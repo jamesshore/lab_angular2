@@ -1,3 +1,5 @@
+// Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+
 import { Component } from "@angular/core";
 import { async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
