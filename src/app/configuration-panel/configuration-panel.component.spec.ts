@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { ConfigurationPanelComponent } from './configuration-panel.component';
 import { Component } from "@angular/core";
@@ -51,26 +51,19 @@ describe('ConfigurationPanelComponent', () => {
     expect(fields[0]).toEqual(new UserEnteredDollars("changed configuration"));
   });
 
-  // it("updates user configuration when field changes (due to user input)", (done) => {
-  //   const config = new UserConfiguration();
-  //   const { fixture } = createComponent(config);
-  //
-  //   const fields = fixture.debugElement.queryAll(By.directive(ConfigurationFieldComponent));
-  //
-  //   const elements = fieldElementsOf(fixture);
-  //   elements[0].value = "foo";
-  //   fields[0].triggerEventHandler("input", null);
-  //   // elements[1].value = "bar";
-  //   // elements[2].value = "baz";
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     console.log("PROMISE FULFILLED");
-  //     expect(config.startingBalance).toEqual(new UserEnteredDollars("foo"));
-  //     done();
-  //     console.log("DONE CALLED");
-  //   });
-  //   console.log("PROMISE IN FLIGHT");
-  // });
+  it("updates user configuration when field changes (due to user input)", fakeAsync((done) => {
+    const config = new UserConfiguration();
+    const { fixture } = createComponent(config);
+
+    const fields = fieldInstancesOf(fixture);
+    fields[0].simulateChange("foo");
+    fields[1].simulateChange("bar");
+    fields[2].simulateChange("baz");
+
+    expect(config.startingBalance).toEqual(new UserEnteredDollars("foo"), "starting balance");
+    expect(config.startingCostBasis).toEqual(new UserEnteredDollars("bar"), "cost basis");
+    expect(config.yearlySpending).toEqual(new UserEnteredDollars("baz"), "yearly spending");
+  }));
 
 });
 
@@ -91,9 +84,16 @@ function createComponent(value: UserConfiguration) {
   return { fixture, testHost };
 }
 
+function fieldsOf(fixture) {
+  return fixture.debugElement.queryAll(By.directive(ConfigurationFieldComponent));
+}
+
+function fieldInstancesOf(fixture) {
+  return fieldsOf(fixture).map((field) => field.componentInstance);
+}
+
 function fieldElementsOf(fixture) {
-  const fields = fixture.debugElement.queryAll(By.directive(ConfigurationFieldComponent));
-  return fields.map((field) => field.nativeElement);
+  return fieldsOf(fixture).map((field) => field.nativeElement);
 }
 
 function fieldElementsFor(value: UserConfiguration) {
@@ -102,8 +102,7 @@ function fieldElementsFor(value: UserConfiguration) {
 }
 
 function fieldValuesOf(fixture) {
-  const fields = fixture.debugElement.queryAll(By.directive(ConfigurationFieldComponent));
-  return fields.map((field) => field.componentInstance.value);
+  return fieldsOf(fixture).map((field) => field.componentInstance.value);
 }
 
 function fieldValuesFor(value: UserConfiguration) {

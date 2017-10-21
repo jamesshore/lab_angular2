@@ -1,5 +1,11 @@
 <div class="config">
-  <app-configuration-field [value]="value.startingBalance">Starting Balance</app-configuration-field>
-  <app-configuration-field [value]="value.startingCostBasis">Cost Basis</app-configuration-field>
-  <app-configuration-field [value]="value.yearlySpending">Yearly Spending</app-configuration-field>
+  <app-configuration-field [value]="value.startingBalance" (onChange)="setStartingBalance($event)">
+    Starting Balance</app-configuration-field>
+  {{value.startingBalance}}
+  <app-configuration-field [value]="value.startingCostBasis" (onChange)="setCostBasis($event)">
+    Cost Basis
+  </app-configuration-field>
+  <app-configuration-field [value]="value.yearlySpending" (onChange)="setYearlySpending($event)">
+    Yearly Spending
+  </app-configuration-field>
 </div>

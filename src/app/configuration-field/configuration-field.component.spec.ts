@@ -80,6 +80,7 @@ describe('ConfigurationFieldComponent', () => {
     component.simulateChange("99");
     expect(testHost.lastEvent).toEqual(new UserEnteredDollars("99"));
   }));
+
 });
 
 
