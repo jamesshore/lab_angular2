@@ -54,7 +54,7 @@ export class UserConfiguration {
     return this._yearlySpending;
   }
 
-  setYearlySpending(dollars: UserEnteredDollars): void { 
+  setYearlySpending(dollars: UserEnteredDollars): void {
     this._yearlySpending = dollars;
     this.triggerChangeEvent();
   }

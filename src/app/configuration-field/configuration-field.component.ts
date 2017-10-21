@@ -12,15 +12,19 @@ export class ConfigurationFieldComponent implements OnChanges {
   @Input() value: UserEnteredDollars;
   title: string;
   invalidClass: boolean;
+  deleteme = new TemporaryModel("initial");
 
   private target: RenderTarget;
 
   constructor() {
+    console.log("START");
+    this.value = new UserEnteredDollars("foo");
     this.target = new MyRenderTarget(this);
   }
 
   ngOnChanges() {
     this.value.renderTo(this.target);
+    console.log("ON CHANGES", this.value);
   }
 
 }
@@ -33,6 +37,21 @@ class MyRenderTarget implements RenderTarget {
   render(values: RenderValues): void {
     this.component.invalidClass = values.invalid;
     this.component.title = values.tooltip || "";
+  }
+
+}
+
+
+
+class TemporaryModel {
+
+  constructor(private _value: string) {}
+
+  get value(): string { return this._value; }
+
+  set value(newValue: string) {
+    console.log(`SET: ${this._value} --> ${newValue}`);
+    this._value = newValue;
   }
 
 }

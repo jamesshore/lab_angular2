@@ -1,4 +1,11 @@
 <div class="config">
   <label><ng-content></ng-content>:</label>
-  <input type="text" [ngClass]="{ 'invalid': invalidClass }" [value]="value.getUserText()" [title]="title">
+  <input
+    type="text"
+    [(ngModel)]="deleteme.value"
+    [value]="value.getUserText()"
+    [ngClass]="{ 'invalid': invalidClass }"
+    [title]="title"
+  >
+  {{deleteme.value}}
 </div>
