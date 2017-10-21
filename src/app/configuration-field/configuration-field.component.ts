@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { RenderTarget, RenderValues } from "../../values/render_target";
 import { UserEnteredDollars } from "../../values/user_entered_dollars";
 
@@ -10,6 +10,8 @@ import { UserEnteredDollars } from "../../values/user_entered_dollars";
 export class ConfigurationFieldComponent implements RenderTarget, OnChanges {
 
   @Input() value: UserEnteredDollars;
+  @Output() onChange = new EventEmitter<UserEnteredDollars>();
+
   title: string;
   invalidClass: boolean;
 
@@ -21,6 +23,7 @@ export class ConfigurationFieldComponent implements RenderTarget, OnChanges {
 
   set model(newValue: string) {
     this.value = new UserEnteredDollars(newValue);
+    this.onChange.emit(this.value);
   }
 
   ngOnChanges() {

@@ -61,6 +61,14 @@ describe('ConfigurationFieldComponent', () => {
     expect(component.value).toEqual(new UserEnteredDollars("updated"));
   }));
 
+  it("sends event when field changes", fakeAsync(() => {
+    const { fixture, testHost, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const textField = textFieldOf(fixture);
+
+    setInputValue(textField, "42");
+    expect(testHost.lastEvent).toEqual(new UserEnteredDollars("42"));
+  }));
+
   function setInputValue(domElement, value: string) {
     domElement.value = value;
     domElement.dispatchEvent(new Event("input"));
@@ -69,11 +77,17 @@ describe('ConfigurationFieldComponent', () => {
 
 
 @Component({
-  template: "<app-configuration-field [value]='value'>{{label}}</app-configuration-field>"
+  template: "<app-configuration-field [value]='value' (onChange)='onChange($event)'>" +
+    "{{label}}" +
+  "</app-configuration-field>"
 })
 class TestHostComponent {
+  lastEvent: UserEnteredDollars;
   value: UserEnteredDollars;
   label: string;
+  onChange(event: UserEnteredDollars) {
+    this.lastEvent = event;
+  }
 }
 
 function createComponent(value: UserEnteredDollars, label: string) {
