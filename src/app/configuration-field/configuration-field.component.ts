@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { RenderTarget, RenderValues } from "../../values/render_target";
 import { UserEnteredDollars } from "../../values/user_entered_dollars";
 
@@ -12,19 +12,17 @@ export class ConfigurationFieldComponent implements OnChanges {
   @Input() value: UserEnteredDollars;
   title: string;
   invalidClass: boolean;
-  deleteme = new TemporaryModel("initial");
+  deleteme: TemporaryModel;
 
   private target: RenderTarget;
 
   constructor() {
-    console.log("START");
-    this.value = new UserEnteredDollars("foo");
     this.target = new MyRenderTarget(this);
+    this.deleteme = new TemporaryModel(this);
   }
 
   ngOnChanges() {
     this.value.renderTo(this.target);
-    console.log("ON CHANGES", this.value);
   }
 
 }
@@ -45,13 +43,19 @@ class MyRenderTarget implements RenderTarget {
 
 class TemporaryModel {
 
-  constructor(private _value: string) {}
+  constructor(private _component: ConfigurationFieldComponent) {}
 
-  get value(): string { return this._value; }
+  get value(): string {
+    console.log("A");
+    if (this._component.value) return this._component.value.getUserText();
+    else return "";
+  }
 
   set value(newValue: string) {
-    console.log(`SET: ${this._value} --> ${newValue}`);
-    this._value = newValue;
+    console.log("B");
+    console.log(`SET: --> ${newValue}`);
+    this._component.value = new UserEnteredDollars(newValue);
+    console.log("C");
   }
 
 }

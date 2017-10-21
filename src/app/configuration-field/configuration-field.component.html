@@ -2,10 +2,17 @@
   <label><ng-content></ng-content>:</label>
   <input
     type="text"
-    [(ngModel)]="deleteme.value"
     [value]="value.getUserText()"
     [ngClass]="{ 'invalid': invalidClass }"
     [title]="title"
   >
-  {{deleteme.value}}
+
+  <!--<input-->
+    <!--type="text"-->
+    <!--[(ngModel)]="deleteme.value"-->
+    <!--[ngClass]="{ 'invalid': invalidClass }"-->
+    <!--[title]="title"-->
+  <!--&gt;-->
+
+
 </div>

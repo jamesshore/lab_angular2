@@ -1,8 +1,4 @@
 
-<div class="config">
-  <app-configuration-field>Starting Balance</app-configuration-field>
-  <app-configuration-field>Cost Basis</app-configuration-field>
-  <app-configuration-field>Yearly Spending</app-configuration-field>
-</div>
+<app-configuration-panel [value]="config"></app-configuration-panel>
 
-<app-stock-market-table [value]="deleteme"></app-stock-market-table>
+<app-stock-market-table [value]="projection"></app-stock-market-table>
