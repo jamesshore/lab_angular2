@@ -10,17 +10,16 @@ import { UserEnteredDollars } from "../../values/user_entered_dollars";
 export class ConfigurationFieldComponent implements OnChanges {
 
   @Input() value: UserEnteredDollars;
+  model: TextToValueConverter;
   title: string;
   invalidClass: boolean;
-  model: TemporaryModel;
-  stringModel: string = "stringModel_initial_value";
 
 
   private target: RenderTarget;
 
   constructor() {
     this.target = new MyRenderTarget(this);
-    this.model = new TemporaryModel(this);
+    this.model = new TextToValueConverter(this);
   }
 
   ngOnChanges() {
@@ -30,31 +29,24 @@ export class ConfigurationFieldComponent implements OnChanges {
 }
 
 
-class MyRenderTarget implements RenderTarget {
+class TextToValueConverter {
+  constructor(private _component: ConfigurationFieldComponent) {}
 
+  get value(): string {
+    return this._component.value.getUserText();
+  }
+
+  set value(newValue: string) {
+    this._component.value = new UserEnteredDollars(newValue);
+  }
+}
+
+
+class MyRenderTarget implements RenderTarget {
   constructor(private component) {}
 
   render(values: RenderValues): void {
     this.component.invalidClass = values.invalid;
     this.component.title = values.tooltip || "";
   }
-
-}
-
-
-
-class TemporaryModel {
-
-  constructor(private _component: ConfigurationFieldComponent) {}
-
-  get value(): string {
-    if (this._component.value) return this._component.value.getUserText();
-    else return "";
-  }
-
-  set value(newValue: string) {
-    console.log(`SET: --> ${newValue}`);
-    this._component.value = new UserEnteredDollars(newValue);
-  }
-
 }

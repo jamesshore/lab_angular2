@@ -52,40 +52,14 @@ describe('ConfigurationFieldComponent', () => {
     expect(textFieldOf(fixture).classList.contains("invalid")).toBe(true);
   }));
 
-  xit("updates value when field changes (due to user input)", fakeAsync(() => {
-    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
-    // const textField = textFieldOf(fixture);
-    //
-    // expect(textField.value).toBe("original");
-    //
-    // textField.value = "updated";
-    // // textField.dispatchEvent(new Event("input"));
-    // const textFieldDebugElement = fixture.debugElement.query(By.css("input"));
-    // textFieldDebugElement.triggerEventHandler("input", null);
-    //
-    // fixture.detectChanges();
-    // tick();
+  it("updates value when field changes due to user input", fakeAsync(() => {
+    const { fixture, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const textField = textFieldOf(fixture);
+    expect(textField.value).toBe("original");
 
-    // setInputValue(fixture, "input", "updated");
-
-    console.log("VALUE", fixture.componentInstance.value);
-
-    expect(testHost.value).toEqual(new UserEnteredDollars("updated"));
+    setInputValue(textField, "updated");
+    expect(component.value).toEqual(new UserEnteredDollars("updated"));
   }));
-
-
-  fit("experimental test, deleteme", fakeAsync(() => {
-    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
-    const fieldComponent = componentUnderTest(fixture);
-    expect(fieldComponent.stringModel).toBe("stringModel_initial_value");
-
-    const inputDom = textFieldOf(fixture);
-    setInputValue(inputDom, "updated");
-
-    expect(fieldComponent.stringModel).toBe("updated");
-  }));
-
-
 
   function setInputValue(domElement, value: string) {
     domElement.value = value;
@@ -105,17 +79,14 @@ class TestHostComponent {
 function createComponent(value: UserEnteredDollars, label: string) {
   const fixture = TestBed.createComponent(TestHostComponent);
   const testHost = fixture.componentInstance;
+  const component = fixture.debugElement.query(By.directive(ConfigurationFieldComponent)).componentInstance;
 
   testHost.value = value;
   testHost.label = label;
   fixture.detectChanges();
   tick();
 
-  return { fixture, testHost };
-}
-
-function componentUnderTest(fixture) {
-  return fixture.debugElement.query(By.directive(ConfigurationFieldComponent)).componentInstance;
+  return { fixture, testHost, component };
 }
 
 function labelOf(fixture) {
