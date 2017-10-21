@@ -6,6 +6,7 @@ import { Dollars } from "../../values/dollars";
 import { ValidDollars } from "../../values/valid_dollars";
 import { UserEnteredDollars } from "../../values/user_entered_dollars";
 import { InvalidDollars } from "../../values/invalid_dollars";
+import { FormsModule } from "@angular/forms";
 
 const IRRELEVANT_DOLLARS = new UserEnteredDollars("irrelevant dollars");
 const IRRELEVANT_LABEL = "irrelevant label";
@@ -14,7 +15,8 @@ describe('ConfigurationFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfigurationFieldComponent, TestHostComponent ]
+      declarations: [ ConfigurationFieldComponent, TestHostComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
   }));
@@ -28,7 +30,7 @@ describe('ConfigurationFieldComponent', () => {
     const textField = textFieldFor(new UserEnteredDollars("123"));
 
     expect(textField.value).toBe("123");
-    expect(textField.className).toBe("");
+    expect(textField.classList.contains("invalid")).toBe(false);
     expect(textField.attributes["title"].value).toBe("");
   });
 
@@ -36,17 +38,17 @@ describe('ConfigurationFieldComponent', () => {
     const textField = textFieldFor(new UserEnteredDollars("xxx"));
 
     expect(textField.value).toBe("xxx");
-    expect(textField.className).toBe("invalid");
+    expect(textField.classList.contains("invalid")).toBe(true);
     expect(textField.getAttribute("title")).toBe("Invalid dollar amount");
   });
 
   it("changes rendering when user input changes", () => {
     const { fixture, testHost } = createComponent(new UserEnteredDollars("123"), IRRELEVANT_LABEL);
-    expect(textFieldOf(fixture).className).toBe("");
+    expect(textFieldOf(fixture).classList.contains("invalid")).toBe(false);
 
     testHost.value = new UserEnteredDollars("xxx");
     fixture.detectChanges();
-    expect(textFieldOf(fixture).className).toBe("invalid");
+    expect(textFieldOf(fixture).classList.contains("invalid")).toBe(true);
   });
 });
 

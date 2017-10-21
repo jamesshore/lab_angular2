@@ -8,12 +8,14 @@ import { UserConfiguration } from "../../persistence/user_configuration";
 import { ConfigurationFieldComponent } from "../configuration-field/configuration-field.component";
 import { By } from "@angular/platform-browser";
 import { UserEnteredDollars } from "../../values/user_entered_dollars";
+import { FormsModule } from "@angular/forms";
 
 describe('ConfigurationPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfigurationPanelComponent, TestHostComponent, ConfigurationFieldComponent ]
+      declarations: [ ConfigurationPanelComponent, TestHostComponent, ConfigurationFieldComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
   }));

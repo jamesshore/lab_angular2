@@ -32,6 +32,10 @@ export class UserConfiguration {
     //}.bind(this), 500);
   }
 
+  get startingBalance(): UserEnteredDollars {
+    return this._startingBalance;
+  }
+
   getStartingBalance(): UserEnteredDollars {
     return this._startingBalance;
   }
