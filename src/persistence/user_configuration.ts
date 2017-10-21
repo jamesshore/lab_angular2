@@ -36,29 +36,25 @@ export class UserConfiguration {
     return this._startingBalance;
   }
 
-  getStartingBalance(): UserEnteredDollars {
-    return this._startingBalance;
-  }
-
-  setStartingBalance(dollars: UserEnteredDollars): void {
+  set startingBalance(dollars: UserEnteredDollars) {
     this._startingBalance = dollars;
     this.triggerChangeEvent();
   }
 
-  getStartingCostBasis(): UserEnteredDollars {
+  get startingCostBasis(): UserEnteredDollars {
     return this._startingCostBasis;
   }
 
-  setStartingCostBasis(dollars: UserEnteredDollars): void {
+  set startingCostBasis(dollars: UserEnteredDollars) {
     this._startingCostBasis = dollars;
     this.triggerChangeEvent();
   }
 
-  getYearlySpending(): UserEnteredDollars {
+  get yearlySpending(): UserEnteredDollars {
     return this._yearlySpending;
   }
 
-  setYearlySpending(dollars: UserEnteredDollars): void {
+  set yearlySpending(dollars: UserEnteredDollars) {
     this._yearlySpending = dollars;
     this.triggerChangeEvent();
   }

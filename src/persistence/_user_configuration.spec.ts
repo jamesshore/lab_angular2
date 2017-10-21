@@ -13,9 +13,9 @@ describe("UserConfiguration", function() {
 	});
 
 	it("has defaults", function() {
-		expect(config.getStartingBalance()).toBe(UserConfiguration.DEFAULT_STARTING_BALANCE);
-		expect(config.getStartingCostBasis()).toBe(UserConfiguration.DEFAULT_STARTING_COST_BASIS);
-		expect(config.getYearlySpending()).toBe(UserConfiguration.DEFAULT_YEARLY_SPENDING);
+		expect(config.startingBalance).toBe(UserConfiguration.DEFAULT_STARTING_BALANCE);
+		expect(config.startingCostBasis).toBe(UserConfiguration.DEFAULT_STARTING_COST_BASIS);
+		expect(config.yearlySpending).toBe(UserConfiguration.DEFAULT_YEARLY_SPENDING);
 	});
 
 	describe("change event", function() {
@@ -29,21 +29,21 @@ describe("UserConfiguration", function() {
 		});
 
 		it("triggers when starting balance changes", function() {
-			config.setStartingBalance(newValue);
+			config.startingBalance = newValue;
 			expect(eventTriggered).toBe(true);
-			expect(config.getStartingBalance()).toBe(newValue);
+			expect(config.startingBalance).toBe(newValue);
 		});
 
 		it("triggers when starting cost basis changes", function() {
-			config.setStartingCostBasis(newValue);
+			config.startingCostBasis = newValue;
 			expect(eventTriggered).toBe(true);
-			expect(config.getStartingCostBasis()).toBe(newValue);
+			expect(config.startingCostBasis).toBe(newValue);
 		});
 
 		it("triggers when yearly spending changes", function() {
-			config.setYearlySpending(newValue);
+			config.yearlySpending = newValue;
 			expect(eventTriggered).toBe(true);
-			expect(config.getYearlySpending()).toBe(newValue);
+			expect(config.yearlySpending).toBe(newValue);
 		});
 
 		it("supports multiple observers", function() {
@@ -52,7 +52,7 @@ describe("UserConfiguration", function() {
 				secondHandlerTriggered = true;
 			});
 
-			config.setStartingBalance(newValue);
+			config.startingBalance = newValue;
 			expect(secondHandlerTriggered).toBe(true);
 		});
 	});

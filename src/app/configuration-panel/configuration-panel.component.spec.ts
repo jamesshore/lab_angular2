@@ -32,19 +32,19 @@ describe('ConfigurationPanelComponent', () => {
     const { fixture, testHost } = createComponent(original);
 
     const updated = new UserConfiguration();
-    updated.setStartingBalance(new UserEnteredDollars("new configuration"));
+    updated.startingBalance = new UserEnteredDollars("new configuration");
     testHost.value = updated;
     fixture.detectChanges();
 
     const fields = fieldValuesOf(fixture);
-    expect(fields[0]).toEqual(updated.getStartingBalance());
+    expect(fields[0]).toEqual(updated.startingBalance);
   });
 
   it("updates fields when user configuration changes", () => {
     const config = new UserConfiguration();
     const { fixture } = createComponent(config);
 
-    config.setStartingBalance(new UserEnteredDollars("changed configuration"));
+    config.startingBalance = new UserEnteredDollars("changed configuration");
     fixture.detectChanges();
 
     const fields = fieldValuesOf(fixture);
@@ -65,7 +65,7 @@ describe('ConfigurationPanelComponent', () => {
   //   fixture.detectChanges();
   //   fixture.whenStable().then(() => {
   //     console.log("PROMISE FULFILLED");
-  //     expect(config.getStartingBalance()).toEqual(new UserEnteredDollars("foo"));
+  //     expect(config.startingBalance).toEqual(new UserEnteredDollars("foo"));
   //     done();
   //     console.log("DONE CALLED");
   //   });
