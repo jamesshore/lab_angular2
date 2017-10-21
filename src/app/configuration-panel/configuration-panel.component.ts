@@ -17,4 +17,8 @@ export class ConfigurationPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  deleteme() {
+    return JSON.stringify(this.value.startingBalance);
+  }
+
 }

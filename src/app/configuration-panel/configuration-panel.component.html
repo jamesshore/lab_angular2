@@ -1,5 +1,6 @@
 <div class="config">
-  <app-configuration-field [value]="value.startingBalance">Starting Balance</app-configuration-field>
+  <app-configuration-field [(ngModel)]="value.startingBalance">Starting Balance</app-configuration-field>
   <app-configuration-field [value]="value.startingCostBasis">Cost Basis</app-configuration-field>
   <app-configuration-field [value]="value.yearlySpending">Yearly Spending</app-configuration-field>
+  {{deleteme()}}
 </div>

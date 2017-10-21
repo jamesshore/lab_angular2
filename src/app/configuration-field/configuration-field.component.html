@@ -3,7 +3,10 @@
   <input
     type="text"
     [(ngModel)]="model"
+    [value]="value.getUserText()"
     [ngClass]="{ 'invalid': invalidClass }"
     [title]="title"
+    (ngModelChange)="onChange($event)"
+    (blur)="onBlur($event)"
   >
 </div>

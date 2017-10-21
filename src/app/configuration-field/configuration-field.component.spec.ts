@@ -27,10 +27,19 @@ describe('ConfigurationFieldComponent', () => {
     expect(labelOf(fixture)).toBe("my label:");
   }));
 
-  it("renders valid values", fakeAsync(() => {
-    const textField = textFieldFor(new UserEnteredDollars("123"));
+  fit("renders valid values", fakeAsync(() => {
+    console.log("A");
+    // const textField = textFieldFor(new UserEnteredDollars("123"));
+    const { fixture, component } = createComponent(new UserEnteredDollars("123"), IRRELEVANT_LABEL);
+    const textField = textFieldOf(fixture);
+    console.log("B");
 
-    expect(textField.value).toBe("123");
+    console.log("COMPONENT VALUE", component.value);
+    console.log("COMPONENT MODEL", component.model);
+    console.log("TEXT FIELD", textField.value);
+
+
+    // expect(textField.value).toBe("123");
     expect(textField.classList.contains("invalid")).toBe(false);
     expect(textField.attributes["title"].value).toBe("");
   }));
@@ -69,7 +78,8 @@ describe('ConfigurationFieldComponent', () => {
 
 
 @Component({
-  template: "<app-configuration-field [value]='value'>{{label}}</app-configuration-field>"
+  // template: "<app-configuration-field [value]='value'>{{label}}</app-configuration-field>"
+  template: "<app-configuration-field [(ngModel)]='value'>{{label}}</app-configuration-field>"
 })
 class TestHostComponent {
   value: UserEnteredDollars;
