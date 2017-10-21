@@ -10,12 +10,17 @@ import { UserEnteredDollars } from "../../values/user_entered_dollars";
 export class ConfigurationFieldComponent implements RenderTarget, OnChanges {
 
   @Input() value: UserEnteredDollars;
-  model: TextToValueConverter;
   title: string;
   invalidClass: boolean;
 
-  constructor() {
-    this.model = new TextToValueConverter(this);
+  constructor() {}
+
+  get model(): string {
+    return this.value.getUserText();
+  }
+
+  set model(newValue: string) {
+    this.value = new UserEnteredDollars(newValue);
   }
 
   ngOnChanges() {
@@ -27,17 +32,4 @@ export class ConfigurationFieldComponent implements RenderTarget, OnChanges {
     this.title = values.tooltip || "";
   }
 
-}
-
-
-class TextToValueConverter {
-  constructor(private _component: ConfigurationFieldComponent) {}
-
-  get value(): string {
-    return this._component.value.getUserText();
-  }
-
-  set value(newValue: string) {
-    this._component.value = new UserEnteredDollars(newValue);
-  }
 }
