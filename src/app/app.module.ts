@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { StockMarketTableComponent } from './stock-market-table/stock-market-table.component';
 import { StockMarketRowComponent } from './stock-market-row/stock-market-row.component';
 import { StockMarketCellComponent } from "./stock-market-cell/stock-market-cell.component";
+import { ConfigurationFieldComponent } from './configuration-field/configuration-field.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StockMarketTableComponent,
     StockMarketRowComponent,
-    StockMarketCellComponent
+    StockMarketCellComponent,
+    ConfigurationFieldComponent
   ],
   imports: [
     BrowserModule
