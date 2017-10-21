@@ -1,18 +1,18 @@
 <div class="config">
   <label><ng-content></ng-content>:</label>
-  <input
-    type="text"
-    [value]="value.getUserText()"
-    [ngClass]="{ 'invalid': invalidClass }"
-    [title]="title"
-  >
-
   <!--<input-->
     <!--type="text"-->
-    <!--[(ngModel)]="deleteme.value"-->
+    <!--[value]="value.getUserText()"-->
     <!--[ngClass]="{ 'invalid': invalidClass }"-->
     <!--[title]="title"-->
   <!--&gt;-->
+
+  <input
+    type="text"
+    [(ngModel)]="deleteme.value"
+    [ngClass]="{ 'invalid': invalidClass }"
+    [title]="title"
+  >
 
 
 </div>

@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { ConfigurationFieldComponent } from './configuration-field.component';
 import { Component } from "@angular/core";
@@ -21,35 +21,45 @@ describe('ConfigurationFieldComponent', () => {
     .compileComponents();
   }));
 
-  it("displays label", () => {
+  it("displays label", fakeAsync(() => {
     const { fixture } = createComponent(IRRELEVANT_DOLLARS, "my label");
     expect(labelOf(fixture)).toBe("my label:");
-  });
+  }));
 
-  it("renders valid values", () => {
+  it("renders valid values", fakeAsync(() => {
     const textField = textFieldFor(new UserEnteredDollars("123"));
 
     expect(textField.value).toBe("123");
     expect(textField.classList.contains("invalid")).toBe(false);
     expect(textField.attributes["title"].value).toBe("");
-  });
+  }));
 
-  it("renders invalid values with a warning icon", () => {
+  it("renders invalid values with a warning icon", fakeAsync(() => {
     const textField = textFieldFor(new UserEnteredDollars("xxx"));
 
     expect(textField.value).toBe("xxx");
     expect(textField.classList.contains("invalid")).toBe(true);
     expect(textField.getAttribute("title")).toBe("Invalid dollar amount");
-  });
+  }));
 
-  it("changes rendering when user input changes", () => {
+  it("changes rendering when value changes", fakeAsync(() => {
     const { fixture, testHost } = createComponent(new UserEnteredDollars("123"), IRRELEVANT_LABEL);
     expect(textFieldOf(fixture).classList.contains("invalid")).toBe(false);
 
     testHost.value = new UserEnteredDollars("xxx");
     fixture.detectChanges();
     expect(textFieldOf(fixture).classList.contains("invalid")).toBe(true);
-  });
+  }));
+
+  xit("updates value when field changes (due to user input)", fakeAsync(() => {
+    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const textField = textFieldOf(fixture);
+
+    expect(textField.value).toBe("original");
+
+    textField.value = "updated";
+    expect(testHost.value).toEqual(new UserEnteredDollars("updated"));
+  }));
 });
 
 
@@ -68,6 +78,8 @@ function createComponent(value: UserEnteredDollars, label: string) {
   testHost.value = value;
   testHost.label = label;
   fixture.detectChanges();
+  tick();
+
   return { fixture, testHost };
 }
 

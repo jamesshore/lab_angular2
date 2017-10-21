@@ -46,16 +46,13 @@ class TemporaryModel {
   constructor(private _component: ConfigurationFieldComponent) {}
 
   get value(): string {
-    console.log("A");
     if (this._component.value) return this._component.value.getUserText();
     else return "";
   }
 
   set value(newValue: string) {
-    console.log("B");
     console.log(`SET: --> ${newValue}`);
     this._component.value = new UserEnteredDollars(newValue);
-    console.log("C");
   }
 
 }
