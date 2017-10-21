@@ -62,7 +62,7 @@ describe('ConfigurationFieldComponent', () => {
   }));
 
   it("sends event when field changes", fakeAsync(() => {
-    const { fixture, testHost, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+    const { fixture, testHost } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
     const textField = textFieldOf(fixture);
 
     setInputValue(textField, "42");
@@ -73,6 +73,13 @@ describe('ConfigurationFieldComponent', () => {
     domElement.value = value;
     domElement.dispatchEvent(new Event("input"));
   }
+
+  it("simulates field change (for testing purposes)", fakeAsync(() => {
+    const { testHost, component } = createComponent(new UserEnteredDollars("original"), IRRELEVANT_LABEL);
+
+    component.simulateChange("99");
+    expect(testHost.lastEvent).toEqual(new UserEnteredDollars("99"));
+  }));
 });
 
 

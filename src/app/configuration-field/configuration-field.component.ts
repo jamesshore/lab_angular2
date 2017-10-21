@@ -35,4 +35,8 @@ export class ConfigurationFieldComponent implements RenderTarget, OnChanges {
     this.title = values.tooltip || "";
   }
 
+  simulateChange(newValue: string) {
+    this.model = newValue;
+  }
+
 }
