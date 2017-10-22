@@ -28,9 +28,9 @@ export class UserConfiguration {
     this._startingCostBasis = UserConfiguration.DEFAULT_STARTING_COST_BASIS;
     this._yearlySpending = UserConfiguration.DEFAULT_YEARLY_SPENDING;
 
-    setInterval(() => {
-    	this.yearlySpending = new UserEnteredDollars(this._yearlySpending.plus(new ValidDollars(1)).toString());
-    }, 500);
+    // setInterval(() => {
+    // 	this.yearlySpending = new UserEnteredDollars(this._yearlySpending.plus(new ValidDollars(1)).toString());
+    // }, 500);
   }
 
   get startingBalance(): UserEnteredDollars {
