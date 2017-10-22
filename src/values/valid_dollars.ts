@@ -48,11 +48,11 @@ export class ValidDollars extends Dollars {
   flipSign(): Dollars {
     let amount = this._amount * -1;
     if (amount === -0) amount = +0;     // Normalize -0 to +0
-    return new ValidDollars(amount);
+    return ValidDollars.create(amount);
   }
 
   percentage(operand: number): Dollars {
-    return new ValidDollars(this._amount * operand / 100);
+    return ValidDollars.create(this._amount * operand / 100);
   }
 
   min(operand: Dollars): Dollars {
@@ -85,7 +85,7 @@ export class ValidDollars extends Dollars {
   private arithmetic(operand: Dollars, fn: (left: number, right: number) => number): Dollars {
     if (!operand.isValid()) return new InvalidDollars();
 
-    return new ValidDollars(fn(this._amount, operand.toNumber()));
+    return ValidDollars.create(fn(this._amount, operand.toNumber()));
   }
 
   private static inRange(value: number) {
