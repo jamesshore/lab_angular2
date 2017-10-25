@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 
-import { Component, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StockMarketProjection } from "../domain/stock_market_projection";
 import { StockMarketYear } from "../domain/stock_market_year";
 import { UserConfiguration } from "../persistence/user_configuration";
@@ -10,14 +10,20 @@ import { UserConfiguration } from "../persistence/user_configuration";
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   config = new UserConfiguration();
   projection = this.projectionFor(this.config);
 
-  constructor(zone: NgZone) {
-    this.config.onChange(() => {
-      this.projection = this.projectionFor(this.config);
+  constructor() {
+  }
+
+  ngOnInit() {
+    UserConfiguration.simulateGetFromServer((config) => {
+      this.config = config;
+      this.config.onChange(() => {
+        this.projection = this.projectionFor(this.config);
+      });
     });
   }
 

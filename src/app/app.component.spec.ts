@@ -22,7 +22,7 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it("initializes configuration panel with default configuration", () => {
+  it("initializes configuration panel with default configuration", fakeAsync(() => {
     const page = TestPage.create();
     const actualConfig = page.configurationComponent.value;
     const expectedConfig = new UserConfiguration();
@@ -30,18 +30,18 @@ describe('AppComponent', () => {
     expect(actualConfig.startingBalance).toEqual(expectedConfig.startingBalance);
     expect(actualConfig.startingCostBasis).toEqual(expectedConfig.startingCostBasis);
     expect(actualConfig.yearlySpending).toEqual(expectedConfig.yearlySpending);
-  });
+  }));
 
-  it("initializes projection based on configuration", () => {
+  it("initializes projection based on configuration", fakeAsync(() => {
     const page = TestPage.create();
     expect(page.tableComponent.value).toEqual(projectionFor(new UserConfiguration()));
-  });
+  }));
 
-  it("updates projection when configuration changes", () => {
+  it("updates projection when configuration changes", fakeAsync(() => {
     const page = TestPage.create();
     page.setStartingBalance(new UserEnteredDollars("123987"));
     expect(page.tableComponent.value).toEqual(projectionFor(page.component.config));
-  });
+  }));
 
   function projectionFor(config: UserConfiguration) {
     const firstYear = new StockMarketYear(
@@ -64,11 +64,14 @@ class TestPage {
   static create(): TestPage {
     const page = new TestPage(TestBed.createComponent(AppComponent));
     page._fixture.detectChanges();
+    tick();
     return page;
   }
 
+
   setStartingBalance(amount: UserEnteredDollars) {
     this.component.config.startingBalance = amount;
+    tick();
     this._fixture.detectChanges();
   }
 

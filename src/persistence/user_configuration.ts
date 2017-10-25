@@ -33,6 +33,16 @@ export class UserConfiguration {
     // }, 500);
   }
 
+  static simulateGetFromServer(callback: Function): void {
+    setTimeout(() => {
+      const config = new UserConfiguration();
+      // config.startingBalance = new UserEnteredDollars("4242");
+      // config.startingCostBasis = new UserEnteredDollars("4200");
+      // config.yearlySpending = new UserEnteredDollars("420");
+      callback(config);
+    }, 0);
+  }
+
   get startingBalance(): UserEnteredDollars {
     return this._startingBalance;
   }
