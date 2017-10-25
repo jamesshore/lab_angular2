@@ -21,7 +21,7 @@ describe('AppComponent', () => {
         AppComponent, ConfigurationPanelComponent, StockMarketTableComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: new FakeConfigService() }
+        { provide: ConfigService, useClass: FakeConfigService }   // 'useValue' lets us use an object
       ]
     }).compileComponents();
   }));
