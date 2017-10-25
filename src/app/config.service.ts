@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { UserConfiguration } from "../persistence/user_configuration";
+import { ConfigurationServer } from "../persistence/configuration_server";
 
 @Injectable()
 export class ConfigService {
 
   getConfig(callback: Function): void {
-    UserConfiguration.simulateGetFromServer(callback);
+    new ConfigurationServer().simulateGetFromServer(callback);
   }
 
 }
@@ -15,7 +16,7 @@ export class FakeConfigService {
   config: UserConfiguration;
 
   getConfig(callback: Function): void {
-    callback(this.config);
+    ConfigurationServer.createFake(this.config).simulateGetFromServer(callback);
   }
 
 }
