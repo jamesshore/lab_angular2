@@ -40,7 +40,7 @@ export class UserConfiguration {
       // config.startingCostBasis = new UserEnteredDollars("4200");
       // config.yearlySpending = new UserEnteredDollars("420");
       callback(config);
-    }, 1000);
+    }, 0);
   }
 
   get startingBalance(): UserEnteredDollars {
