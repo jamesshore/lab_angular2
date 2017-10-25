@@ -10,7 +10,7 @@ import { ConfigService } from "./config.service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ],
-  providers: [ ConfigService ]
+  // CANNOT declare ConfigService provider here because it prevents the test's provider from taking effect
 })
 export class AppComponent implements OnInit {
 

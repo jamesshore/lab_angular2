@@ -9,3 +9,13 @@ export class ConfigService {
   }
 
 }
+
+export class FakeConfigService {
+
+  config: UserConfiguration;
+
+  getConfig(callback: Function): void {
+    callback(this.config);
+  }
+
+}

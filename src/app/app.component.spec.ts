@@ -10,6 +10,7 @@ import { By } from "@angular/platform-browser";
 import { StockMarketYear } from "../domain/stock_market_year";
 import { StockMarketProjection } from "../domain/stock_market_projection";
 import { UserEnteredDollars } from "../values/user_entered_dollars";
+import { ConfigService, FakeConfigService } from "./config.service";
 
 describe('AppComponent', () => {
 
@@ -19,13 +20,18 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent, ConfigurationPanelComponent, StockMarketTableComponent
       ],
+      providers: [
+        { provide: ConfigService, useValue: new FakeConfigService() }
+      ]
     }).compileComponents();
   }));
 
-  it("initializes configuration panel with default configuration", fakeAsync(() => {
-    const page = TestPage.create();
-    const actualConfig = page.configurationComponent.value;
+  it("initializes configuration panel with configuration from server", fakeAsync(() => {
     const expectedConfig = new UserConfiguration();
+    expectedConfig.startingBalance = new UserEnteredDollars("4242");
+
+    const page = TestPage.create(expectedConfig);
+    const actualConfig = page.configurationComponent.value;
 
     expect(actualConfig.startingBalance).toEqual(expectedConfig.startingBalance);
     expect(actualConfig.startingCostBasis).toEqual(expectedConfig.startingCostBasis);
@@ -33,12 +39,12 @@ describe('AppComponent', () => {
   }));
 
   it("initializes projection based on configuration", fakeAsync(() => {
-    const page = TestPage.create();
+    const page = TestPage.create(new UserConfiguration());
     expect(page.tableComponent.value).toEqual(projectionFor(new UserConfiguration()));
   }));
 
   it("updates projection when configuration changes", fakeAsync(() => {
-    const page = TestPage.create();
+    const page = TestPage.create(new UserConfiguration());
     page.setStartingBalance(new UserEnteredDollars("123987"));
     expect(page.tableComponent.value).toEqual(projectionFor(page.component.config));
   }));
@@ -61,13 +67,14 @@ class TestPage {
 
   constructor(public _fixture) {}
 
-  static create(): TestPage {
+  static create(fakeServerConfig: UserConfiguration): TestPage {
     const page = new TestPage(TestBed.createComponent(AppComponent));
+    const fakeConfigService = page._fixture.debugElement.injector.get(ConfigService);
+    fakeConfigService.config = fakeServerConfig;
     page._fixture.detectChanges();
     tick();
     return page;
   }
-
 
   setStartingBalance(amount: UserEnteredDollars) {
     this.component.config.startingBalance = amount;
