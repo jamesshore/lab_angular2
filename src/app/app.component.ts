@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { StockMarketProjection } from "../domain/stock_market_projection";
 import { StockMarketYear } from "../domain/stock_market_year";
 import { UserConfiguration } from "../persistence/user_configuration";
-import { ConfigService } from "./config.service";
+import { ConfigurationServer } from "../persistence/configuration_server";
 
 @Component({
   selector: 'app-root',
@@ -14,14 +14,15 @@ import { ConfigService } from "./config.service";
 })
 export class AppComponent implements OnInit {
 
+  configServer = new ConfigurationServer();
   config = new UserConfiguration();
   projection = this.projectionFor(this.config);
 
-  constructor(private readonly _configService: ConfigService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this._configService.getConfig((config) => {
+    this.configServer.simulateGetFromServer((config) => {
       this.config = config;
       this.config.onChange(() => {
         this.projection = this.projectionFor(this.config);

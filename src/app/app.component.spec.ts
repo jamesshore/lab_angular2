@@ -10,7 +10,7 @@ import { By } from "@angular/platform-browser";
 import { StockMarketYear } from "../domain/stock_market_year";
 import { StockMarketProjection } from "../domain/stock_market_projection";
 import { UserEnteredDollars } from "../values/user_entered_dollars";
-import { ConfigService, FakeConfigService } from "./config.service";
+import { ConfigurationServer } from "../persistence/configuration_server";
 
 describe('AppComponent', () => {
 
@@ -19,9 +19,6 @@ describe('AppComponent', () => {
       schemas: [ NO_ERRORS_SCHEMA ],
       declarations: [
         AppComponent, ConfigurationPanelComponent, StockMarketTableComponent
-      ],
-      providers: [
-        { provide: ConfigService, useValue: new FakeConfigService() }
       ]
     }).compileComponents();
   }));
@@ -69,8 +66,7 @@ class TestPage {
 
   static create(fakeServerConfig: UserConfiguration): TestPage {
     const page = new TestPage(TestBed.createComponent(AppComponent));
-    const fakeConfigService = page._fixture.debugElement.injector.get(ConfigService);
-    fakeConfigService.config = fakeServerConfig;
+    page.component.configServer = ConfigurationServer.createFake(fakeServerConfig);
     page._fixture.detectChanges();
     tick();
     return page;

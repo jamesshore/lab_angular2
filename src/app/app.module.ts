@@ -8,7 +8,6 @@ import { StockMarketCellComponent } from "./stock-market-cell/stock-market-cell.
 import { ConfigurationFieldComponent } from './configuration-field/configuration-field.component';
 import { ConfigurationPanelComponent } from './configuration-panel/configuration-panel.component';
 import { FormsModule } from "@angular/forms";
-import { ConfigService } from "./config.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +22,7 @@ import { ConfigService } from "./config.service";
     BrowserModule,
     FormsModule
   ],
-  providers: [ ConfigService ],
+  providers: [],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
