@@ -30,7 +30,7 @@ export class StockMarketCellComponent implements RenderTarget, OnChanges {
     else this._element.classList.remove(NEGATIVE_CLASS);
 
     if (values.invalid) {
-      this._element.innerHTML = "<img src='/invalid_dollars.png' />";
+      this._element.innerHTML = "<img src='/assets/invalid_dollars.png' />";
       this._element.setAttribute("title", values.tooltip);
     }
   }
