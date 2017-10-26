@@ -9,8 +9,11 @@ Those episodes were an exploration and review of the [AngularJS "1"](https://ang
 
   The application also includes a domain layer, value objects, and a (simulated) persistence layer. Those layers are in subdirectories of `src`. This architecture was an experiment to see how well Angular handled an approach outside of its comfort zone. It's not necessarily a pattern to follow in your own applications. (In particular, the way value objects are rendered was an experiment to see how well Angular could deal with an unusual architecture, not something to emulate.)
 
-
 2. **Unit Tests.** All the code is unit tested. There are a few different styles used; my favorite is in `app/configuration_field/configuration-field.component.spec.ts`. That file also demonstrates how to test changes to a form field, something that wasn't well documented.
+
+3. **Angular Services and Test Doubles.** The `service_experiment` branch demonstrates using a `ConfigService` to get data from a (simulated) server. Look at `src/app/app.component.ts` for the source code that uses the service and `src/app/app.component.spec.ts` for its tests.
+
+4. **Working Without Services.** The `no_service_experiment` branch demonstrates the same ideas as the  `service_experiment` branch, but does it completely without Angular's services infrastructure or dependency injection. It's actually simpler that way. Again, see `src/app/app.component.ts` and its tests for the example. 
 
 See the screencasts for more information about the history of the sample app.
 
