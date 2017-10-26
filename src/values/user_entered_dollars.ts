@@ -57,7 +57,7 @@ export class UserEnteredDollars extends Dollars {
 
   	const number = parseFloat(text);
   	if (isNaN(number)) return new InvalidDollars();
-  	else return new ValidDollars(number);
+  	else return ValidDollars.create(number);
 
 
   	function startsWith(start) {
