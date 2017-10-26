@@ -118,6 +118,10 @@ describe("UserEnteredDollars", function() {
 		it("uses backing data type", function() {
 			expect(valid + "").toEqual(_10 + "");
 		});
+
+		it("converts out-of-bounds numbers to invalid dollars", function() {
+		  expect(new UserEnteredDollars(`${ValidDollars.MAX_VALUE + 1}`).isValid()).toBe(false);
+    });
 	});
 
 
